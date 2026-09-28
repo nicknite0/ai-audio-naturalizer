@@ -1,36 +1,18 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Audio Naturalizer</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<main class="app">
-<header><div class="brand">〽 <strong>Audio Naturalizer</strong> <span>V0.1</span></div><p>Make AI-generated audio feel more natural — process the entire clip, no separation.</p></header>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Audio Naturalizer</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="app">
+<header><div class="brand">〽 <strong>Audio Naturalizer</strong> <span>V0.2</span></div><p>Make AI-generated audio feel more natural — process the entire clip, no separation.</p></header>
 <section class="grid">
-<aside class="panel">
-<div id="drop" class="drop"><div class="film">▣</div><h2>Drop MP4 Here</h2><p>or</p><label class="button">Browse for File<input id="file" type="file" accept="video/mp4,video/*" hidden></label></div>
-<div class="clip"><h3>Loaded Clip</h3><div id="empty">No clip loaded</div><video id="thumb" muted></video><div id="meta"></div></div>
-</aside>
-<section class="center panel">
-<div class="preview"><video id="video" controls></video><div id="placeholder">Your video preview will appear here</div></div>
-<div class="wave"><div><span>Original</span><div class="line"></div></div><div><span>Processed</span><div class="line active"></div></div></div>
-<div class="compare"><button id="original">Original Audio</button><button id="processed" class="primary">Processed Audio</button></div>
-</section>
-<aside class="panel controls">
-<h3>Naturalization Presets</h3><div class="presets"><button data-preset="light">Light</button><button class="primary" data-preset="natural">Natural</button><button data-preset="strong">Strong</button></div>
-<h3>Adjustments</h3>
+<aside class="panel"><div id="drop" class="drop"><div class="film">▣</div><h2>Drop MP4 Here</h2><p>or</p><label class="button">Browse for File<input id="file" type="file" accept="video/mp4,video/*" hidden></label></div><div class="clip"><h3>Loaded Clip</h3><div id="empty">No clip loaded</div><video id="thumb" muted></video><div id="meta"></div></div></aside>
+<section class="center panel"><div class="preview"><video id="video" controls></video><div id="placeholder">Your video preview will appear here</div></div><div class="wave"><div><span>Original</span><div class="line"></div></div><div><span>Processed</span><div class="line active"></div></div></div><div class="compare"><button id="original">Original Audio</button><button id="processed" disabled>Processed Audio</button><a id="download" class="button" hidden>Export MP4</a></div></section>
+<aside class="panel controls"><h3>Naturalization Presets</h3><div class="presets"><button data-preset="light">Light</button><button class="primary" data-preset="natural">Natural</button><button data-preset="strong">Strong</button></div><h3>Adjustments</h3>
 <label>Naturalize Strength <output id="strengthOut">60</output><input id="strength" type="range" min="0" max="100" value="60"></label>
 <label>Harshness Reduction <output id="harshOut">70</output><input id="harsh" type="range" min="0" max="100" value="70"></label>
 <label>Dynamics Smoothing <output id="smoothOut">50</output><input id="smooth" type="range" min="0" max="100" value="50"></label>
 <label>Warmth <output id="warmOut">40</output><input id="warm" type="range" min="0" max="100" value="40"></label>
 <label>Output Level <output id="levelOut">0 dB</output><input id="level" type="range" min="-12" max="6" value="0"></label>
-<div class="checks"><label><input type="checkbox" checked> Maintain original loudness</label><label><input type="checkbox" checked> Prevent clipping</label></div>
-<button id="process" class="primary big" disabled>Naturalize Audio</button>
-</aside>
-</section>
-<footer><div><b>1 Load Clip</b><span>Choose an AI-generated MP4.</span></div><div><b>2 Adjust</b><span>Preset or fine-tune.</span></div><div><b>3 Compare</b><span>A/B original vs processed.</span></div><div><b>4 Export</b><span>Save MP4 with untouched video.</span></div></footer>
-<div id="status">V0.1 interface prototype — processing engine comes next.</div>
-</main><script src="app.js"></script>
-</body></html>
+<div class="checks"><label><input id="loudness" type="checkbox" checked> Maintain natural loudness</label><label><input id="clipping" type="checkbox" checked> Prevent clipping</label></div>
+<button id="process" class="primary big" disabled>Naturalize Audio</button></aside></section>
+<footer><div><b>1 Load Clip</b><span>Choose an AI-generated MP4.</span></div><div><b>2 Adjust</b><span>Preset or fine-tune.</span></div><div><b>3 Compare</b><span>A/B original vs processed.</span></div><div><b>4 Export</b><span>Save MP4 with untouched video.</span></div></footer><div id="status">V0.2 — browser FFmpeg engine loads when you process a clip.</div>
+</main><script type="module" src="app.js"></script></body></html>
