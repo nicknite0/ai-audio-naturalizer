@@ -1,17 +1,24 @@
 # Audio Naturalizer
 
-Experimental local tool for improving the naturalness and cohesion of audio in AI-generated video clips.
+Local, model-agnostic experiment for making the **complete soundtrack** of AI-generated video clips feel more natural.
 
-## V0.1 goal
+## V0.2
 
-- Load an MP4 clip.
-- Process the **entire soundtrack together** — no stem separation.
-- Leave the video and timing untouched.
-- A/B compare original and processed audio.
-- Export a new MP4.
+The browser prototype now uses FFmpeg WebAssembly to process a loaded MP4 locally.
 
-The initial interface is a prototype. The next milestone is connecting a real local FFmpeg-based audio processing pipeline and testing it against AI-generated dialogue clips.
+- No stem separation.
+- The whole soundtrack is processed together.
+- Video is stream-copied unchanged; only audio is encoded.
+- Light / Natural / Strong presets.
+- Harshness reduction, warmth, dynamics smoothing and output level.
+- Loudness normalization and clipping protection.
+- A/B playback between the original and processed MP4.
+- Export the processed MP4.
 
-## Processing philosophy
+## First test
 
-Audio Naturalizer is model-agnostic. It is intended for clips from any AI video generator, not one specific model.
+Use a short dialogue clip and start with **Natural**. Compare the same passage in Original and Processed before changing sliders. This first chain is intentionally conservative so we can learn which processing actually helps instead of stacking effects blindly.
+
+## Running
+
+Because the app imports browser FFmpeg modules, serve the repository over HTTP (GitHub Pages or a local web server) rather than opening index.html directly from disk.
