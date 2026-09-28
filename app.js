@@ -29,7 +29,7 @@ async function ensureFFmpeg(){
  ffmpeg.on('progress',({progress})=>{status.textContent='Naturalizing audio… '+Math.max(0,Math.min(100,Math.round(progress*100)))+'%'});
  // Load the FFmpeg core from a same-origin blob. This avoids cross-origin Worker
  // restrictions on Vercel/GitHub Pages while keeping processing entirely local.
- const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd';
+ const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/esm';
  const coreURL=await toBlobURL(base+'/ffmpeg-core.js','text/javascript');
  const wasmURL=await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm');
  await ffmpeg.load({coreURL,wasmURL,classWorkerURL:new URL('./ffmpeg-worker.js',window.location.href).href});
