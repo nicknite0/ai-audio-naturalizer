@@ -27,8 +27,12 @@ async function ensureFFmpeg(){
  status.textContent='Loading local audio engine…';
  ffmpeg=new FFmpeg();
  ffmpeg.on('progress',({progress})=>{status.textContent='Naturalizing audio… '+Math.max(0,Math.min(100,Math.round(progress*100)))+'%'});
- const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/esm';
- await ffmpeg.load({coreURL:await toBlobURL(base+'/ffmpeg-core.js','text/javascript'),wasmURL:await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm')});
+ // Load the FFmpeg core from a same-origin blob. This avoids cross-origin Worker
+ // restrictions on Vercel/GitHub Pages while keeping processing entirely local.
+ const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd';
+ const coreURL=await toBlobURL(base+'/ffmpeg-core.js','text/javascript');
+ const wasmURL=await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm');
+ await ffmpeg.load({coreURL,wasmURL});
 }
 
 function audioFilter(){
@@ -59,7 +63,7 @@ processBtn.addEventListener('click',async()=>{
   processedBtn.disabled=false;download.hidden=false;download.href=processedURL;download.download=sourceFile.name.replace(/\.mp4$/i,'')+'-naturalized.mp4';
   video.src=processedURL;processedBtn.classList.add('primary');originalBtn.classList.remove('primary');
   status.textContent='Done. Processed the complete soundtrack; video stream was copied unchanged.';
- }catch(err){console.error(err);status.textContent='Processing failed: '+(err?.message||err)+'. Try Chrome/Edge and a short MP4 first.'}
+ }catch(err){console.error(err);ffmpeg=null;status.textContent='Processing failed: '+(err?.message||err)+'. Refresh once after this update and try the same short MP4 again.'}
  finally{processBtn.disabled=false}
 });
 originalBtn.addEventListener('click',()=>{if(!originalURL)return;const t=video.currentTime;video.src=originalURL;video.currentTime=t;originalBtn.classList.add('primary');processedBtn.classList.remove('primary');status.textContent='Original audio selected.'});
